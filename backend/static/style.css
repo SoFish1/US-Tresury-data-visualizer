@@ -1,0 +1,23 @@
+body {
+background: white;
+color: black;
+}
+/* Stili per i titoli h1 */
+    
+    
+h1 {
+color: red;
+font: 36px Helvetica, Arial, sans-serif;
+}
+/* Colore del testo delle liste */
+    
+    
+li {color: green;}
+/* Colore dei titoli h1 per la stampa */
+@media print {
+h1 {color: black;}
+}
+
+.flashes{
+    color: red;
+}

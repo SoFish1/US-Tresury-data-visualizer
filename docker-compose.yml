@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: react-flask-app-backend
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: react-flask-app-client
+    ports:
+      - "3000:80"
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - '8086:8086'
+    volumes:
+      - data:/var/lib/influxdb2 
+      - config:/etc/influxdb2 
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - INFLUXDB_DB=mydb
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=mypassword1      
+      - INFLUXD_INIT_PORT=8086
+      - DOCKER_INFLUXDB_INIT_ORG=myorg
+      - DOCKER_INFLUXDB_INIT_BUCKET=mybucket
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-auth-token
+volumes:
+  data:
+  config:
