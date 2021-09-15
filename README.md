@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Description of the project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This projet aims to build a website that scrape the US treasury daily financial data from the website [1], and to plot them to logged users. 
 
-## Available Scripts
+The emploied stack is the following: 
+Frontend : ReactJS
+Backend : Flask
+Users DB : SQLite 
+Financial data DB : InfluxDB
 
-In the project directory, you can run:
 
-### `yarn start`
+The python code (backend) is divided in two blueprints: 
+  - auth: which manage user registration authentication. The user registration is submitted via a confimation process: an email with a link is sent to the user. If you want to test the user registration you can use a temporary email (reference [2]).
+  - main. which manage the data scraping, the DB loading (and uploading) and the REST API to send to the frontend the graphs
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The ReactJS code (frontend) presents de following pages : Register, Login, Confirmation account and show_data.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The project also provide an easy set up of all the dependecies thanks to the docker-compose.yml file. 
 
-### `yarn test`
+# Run the project
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run the code follow the following steps:
 
-### `yarn build`
+Replace the "xxx.xxx.xxx.xxx" string with the local IP in line 6 of the file: backend\flaskr\main\db_config.py 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Then, run the following commands: 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+docker-compose up -d
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+pip install bs4 influxdb_client requests
+python .\backend\flaskr\main\scrape_hist_data.py -> to download the data in the folder DATA
+python .\backend\flaskr\main\db_loading.py -> to load the time series DB
 
-### `yarn eject`
+then you can run the site at http://localhost:3000/ and test all the functionalities.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+References : 
+[1] https://fsapps.fiscal.treasury.gov/dts/issues/collapsed
+[2] https://temp-mail.org/en/
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
