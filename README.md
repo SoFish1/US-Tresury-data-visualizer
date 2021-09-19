@@ -1,7 +1,11 @@
 # Description of the project
 This project aims to build a website that scrape the US treasury daily financial data from the website [1], and to show them to logged users as time series plot.
 
-The employed stack is the following: Frontend : ReactJS Backend : Flask Users DB : SQLite Financial data DB : InfluxDB
+The employed stack is the following: 
+Frontend : ReactJS 
+Backend : Flask 
+Users DB : SQLite 
+Financial data DB : InfluxDB
 
 The python code (backend) is divided in two blueprints:
 
@@ -29,7 +33,7 @@ then you can run the site at http://localhost:3000/ and test all the functionali
 
 The development phase of this project is ongoing, notably, i'd like to add the following features: 
 - Backend automatic testing code
-- Process to recover the lost passwords
+- A process to recover the lost passwords
 - daily update of the influxDB with cron
 -
 
