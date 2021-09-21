@@ -1,19 +1,19 @@
 # Description of the project
-This project aims to run a website that scrape the US treasury daily financial data from the website [1], and to show them to logged users as time series plots.
+This project aims to run a website that scrapes the US treasury daily financial data from the website [1], and to show them to logged users as time series plots.
 
 The employed stack is the following: 
 - Frontend : ReactJS 
-- Backend : Flask 
-- Users DB : SQLite 
-- Financial data DB : InfluxDB
+- Backend: Flask 
+- Users DB: SQLite 
+- Financial data DB: InfluxDB
 
-The python code (backend) is divided in two blueprints:
+The python code (backend) is divided into two blueprints:
 
-- auth: which manage user registration authentication. The user registration is submitted trough a confirmation process: an email with a link is sent to the user. If you want to test the user registration you can use a temporary email (reference [2]).
-- main: which manage the data scraping, the DB loading (and uploading) and the REST API to send to the frontend the graphs
-The ReactJS code (frontend) presents de following pages : Register, Login, Confirmation account and show_data.
+- auth: This blueprint manages user registration authentication. The user registration is submitted through a confirmation process: an email with a link is sent to the user. If you want to test the user registration you can use a temporary email (reference [2]).
+- main: This blueprint manages the data scraping, the DB loading (and uploading), and the REST API to send the data to the frontend.
+The ReactJS code (frontend) presents de following pages: Register, Login, Confirmation account, and show_data.
 
-The project also provide an easy set up of all the dependencies thanks to the docker-compose.yml file.
+The project also provides an easy setup of all the dependencies thanks to the docker-compose.yml file.
 
 # How to run the project
 To run the code follow the following steps:
@@ -27,21 +27,18 @@ Then, run the following commands:
 * python .\backend\flaskr\main\scrape_hist_data.py -> to download the data in the folder DATA 
 * python .\backend\flaskr\main\db_loading.py -> to load the time series DB
 
-then you can run the site at http://localhost:3000/ and test all the functionalities.
+Then you can run the site at http://localhost:3000/ and test all the functionalities.
 
 
 # What to do next? 
 
-The development phase of this project is ongoing, notably, i'd like to add the following features: 
+The development phase of this project is ongoing, notably, I'd like to add the following features: 
 - Backend automatic testing code
 - A process to recover the lost passwords
-- daily update of the influxDB with cron
+- Daily update of the influxDB with cron
 - A script to automatically run the website
 
 
 References : 
 [1] https://fsapps.fiscal.treasury.gov/dts/issues/collapsed 
 [2] https://temp-mail.org/en/
-
-
-
