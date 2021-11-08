@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Description of the project
+This project aims to run a website that scrapes the US treasury daily financial data from the website [1], and to show them to logged users as time series plots.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The employed stack is the following: 
+- Frontend : ReactJS 
+- Backend: Flask 
+- Users DB: SQLite 
+- Financial data DB: InfluxDB
 
-## Available Scripts
+The python code (backend) is divided into two blueprints:
 
-In the project directory, you can run:
+- auth: This blueprint manages user registration authentication. The user registration is submitted through a confirmation process: an email with a link is sent to the user. If you want to test the user registration you can use a temporary email (reference [2]).
+- main: This blueprint manages the data scraping, the DB loading (and uploading), and the REST API to send the data to the frontend.
+The ReactJS code (frontend) presents de following pages: Register, Login, Confirmation account, and show_data.
 
-### `yarn start`
+The project also provides an easy setup of all the dependencies thanks to the docker-compose.yml file.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# How to run the project
+To run the code follow the following steps:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Replace the "xxx.xxx.xxx.xxx" string with the local IP in line 6 of the file: backend\flaskr\main\db_config.py
 
-### `yarn test`
+Then, run the following commands:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* docker-compose up -d
+* pip install bs4 influxdb_client requests 
+* python .\backend\flaskr\main\scrape_hist_data.py -> to download the data in the folder DATA 
+* python .\backend\flaskr\main\db_loading.py -> to load the time series DB
 
-### `yarn build`
+Then you can run the site at http://localhost:3000/ and test all the functionalities.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# What to do next? 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The development phase of this project is ongoing, notably, I'd like to add the following features: 
+- Backend automatic testing code
+- A process to recover the lost passwords
+- Daily update of the influxDB with cron
+- A script to automatically run the website
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+References : 
+[1] https://fsapps.fiscal.treasury.gov/dts/issues/collapsed 
+[2] https://temp-mail.org/en/
