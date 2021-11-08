@@ -108,8 +108,6 @@ def register():
         db.session.add(user)
         db.session.commit()
             
-
-
     except exc.IntegrityError:
         db.session.rollback()
         
