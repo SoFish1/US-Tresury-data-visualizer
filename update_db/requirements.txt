@@ -1,0 +1,4 @@
+influxdb-client==1.19.0
+beautifulsoup4==4.10.0
+bs4==0.0.1
+requests==2.26.0

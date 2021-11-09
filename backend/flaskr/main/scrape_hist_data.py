@@ -36,7 +36,7 @@ for j in range(0,len(years)):
                 f.close()
             except FileNotFoundError as e:
                 print(e)    
-            time.sleep(0.05)
+            
     
    
 

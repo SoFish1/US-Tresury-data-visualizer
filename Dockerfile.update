@@ -1,9 +1,12 @@
 FROM python:3.6.12-alpine3.12
+WORKDIR /app
 
 COPY update_db/. ./
 
 RUN pip install -r requirements.txt
 
+
 RUN crontab crontab
 
+EXPOSE 50000
 CMD ["crond", "-f"]

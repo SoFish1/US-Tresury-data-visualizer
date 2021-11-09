@@ -56,6 +56,8 @@ services:
       dockerfile: Dockerfile.update
     image: react-flask-app-backend-update
     container_name: db_update
+    ports:
+      - "50000:50000"
     networks:
       - backend
 
