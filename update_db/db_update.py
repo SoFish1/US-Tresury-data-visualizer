@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import requests, re
 from db_loading import extract_points, extract_date
 from db_config import write_api,bucket
-from os import getcwd, listdir
+from datetime import datetime
 
 
 
@@ -48,7 +48,9 @@ def download_last_DTS():
 
 
 def db_update():
-    print("Updating_db")
+    now = datetime.now()
+    print("Influx DB updated at:", now.strftime("%d/%m/%Y %H:%M:%S"))
+
     DTS=download_last_DTS()
     if isinstance(DTS, Daily_Tresaury_Statement):
         points=extract_points(DTS.text.split("\n"),DTS.date)
