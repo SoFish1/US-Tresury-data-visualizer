@@ -1,1 +1,1 @@
-* * * * * python -u /app/db_update.py 
+0 12 * * * python -u /app/db_update.py 

@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests, re, time
 from os import chdir, getcwd 
+
 #Identification of the DATA folder
 local_path=getcwd()
 chdir("DATA")
@@ -12,7 +13,7 @@ print(data_path)
 #soup = BeautifulSoup(req.text, "html.parser")
 
 # Finding the main title tag.
-years = [i for i in range(2021,2022)]
+years = [i for i in range(2021,2023)]
 
 
 

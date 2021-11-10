@@ -34,8 +34,8 @@ services:
     ports:
       - '8086:8086'
     volumes:
-      - data:/var/lib/influxdb2 
-      - config:/etc/influxdb2 
+      - influxdb_data:/var/lib/influxdb2 
+      - influxdb_config:/etc/influxdb2 
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - INFLUXDB_DB=mydb
@@ -60,10 +60,15 @@ services:
       - "50000:50000"
     networks:
       - backend
+    volumes:
+      - load_db_app:/app
+    depends_on:
+      - influxdb
 
 volumes:
-  data:
-  config:
+  influxdb_data:
+  influxdb_config:
+  load_db_app:
 
 networks:
   frontend:

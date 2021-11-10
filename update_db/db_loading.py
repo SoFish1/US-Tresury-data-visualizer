@@ -4,10 +4,7 @@ from re import compile, sub
 from db_config import client,write_api,bucket
 
 
-#Identification of the local DATA folder path
-#local_path=getcwd()
-#chdir("DATA")
-#data_path=(getcwd())
+
 
 #Each point in a document is associated to a name and a value;
 # These points are read in process_line() function.; 
@@ -152,14 +149,18 @@ def hist_data_loading():
         points=process_file(filename)
 
         
-        try:
-            write_api.write(bucket=bucket, record=points.deposits)
-            write_api.write(bucket=bucket, record=points.withdrawal)
+        #try:
+        write_api.write(bucket=bucket, record=points.deposits)
+        write_api.write(bucket=bucket, record=points.withdrawal)
 
-        except Exception as e: 
-            print (e, filename)
+        #except Exception as e: 
+        #print (e, filename)
     
 
 if __name__ == "__main__":
+    #Identification of the local DATA folder path
+    local_path=getcwd()
+    chdir("DATA")
+    data_path=(getcwd())
     hist_data_loading()
     

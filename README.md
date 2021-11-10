@@ -1,5 +1,5 @@
 # Description of the project
-This project aims to run a website that scrapes the US treasury daily financial data from the website [1], and to show them to logged users as time series plots.
+This project aims to run a website that scrapes the US treasury daily financial data from the [website](https://fsapps.fiscal.treasury.gov/dts/issues/collapsed), and to show them to logged users as time series plots.
 
 The employed stack is the following: 
 - Frontend : ReactJS 
@@ -9,7 +9,7 @@ The employed stack is the following:
 
 The python code (backend) is divided into two blueprints:
 
-- auth: This blueprint manages user registration authentication. The user registration is submitted through a confirmation process: an email with a link is sent to the user. If you want to test the user registration you can use a temporary email (reference [2]).
+- auth: This blueprint manages user registration authentication. The user registration is submitted through a confirmation process: an email with a link is sent to the user. If you want to test the user registration you can use a [temporary email](https://temp-mail.org/en/).
 - main: This blueprint manages the data scraping, the DB loading (and uploading), and the REST API to send the data to the frontend.
 The ReactJS code (frontend) presents de following pages: Register, Login, Confirmation account, and show_data.
 
@@ -39,6 +39,4 @@ The development phase of this project is ongoing, notably, I'd like to add the f
 - A script to automatically run the website
 
 
-References : 
-[1] https://fsapps.fiscal.treasury.gov/dts/issues/collapsed 
-[2] https://temp-mail.org/en/
+
