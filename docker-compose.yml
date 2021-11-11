@@ -15,9 +15,9 @@ services:
       DB_ORG: 'myorg' 
     ports:
       - "5000:5000"
-    networks:
-      - frontend
-      - backend
+    # networks:
+    #   - frontend
+    #   - backend
     depends_on:
       - influxdb
 
@@ -29,8 +29,8 @@ services:
     container_name: frontend
     ports:
       - "3000:80"
-    networks:
-      - frontend
+    # networks:
+    #   - frontend
 
 
 
@@ -51,8 +51,8 @@ services:
       - DOCKER_INFLUXDB_INIT_BUCKET=mybucket
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-auth-token
     container_name: influxdb
-    networks:
-      - backend
+    # networks:
+    #   - backend
 
 
   update:
@@ -69,8 +69,8 @@ services:
       DB_ORG: 'myorg'     
     ports:
       - "50000:50000"
-    networks:
-      - backend
+    # networks:
+    #   - backend
     depends_on:
       - influxdb
 
@@ -79,8 +79,8 @@ volumes:
   influxdb_config:
 
 
-networks:
-  frontend:
-    driver: bridge
-  backend:
-    driver: bridge
+# networks:
+#   frontend:
+#     driver: bridge
+#   backend:
+#     driver: bridge
