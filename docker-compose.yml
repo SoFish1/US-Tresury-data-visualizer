@@ -8,7 +8,11 @@ services:
     container_name: backend
     environment:
       APP_PORT: 5000
-      DB_PORT_8086_TCP_ADDR: 'influxdb'
+      DB_BUCKET_NAME: 'mybucket'
+      DB_HOST_NAME: 'influxdb'
+      DB_PORT: '8086'
+      DB_TOKEN: 'my-super-secret-auth-token'
+      DB_ORG: 'myorg' 
     ports:
       - "5000:5000"
     networks:
@@ -27,6 +31,7 @@ services:
       - "3000:80"
     networks:
       - frontend
+
 
 
   influxdb:
@@ -56,19 +61,23 @@ services:
       dockerfile: Dockerfile.update
     image: react-flask-app-backend-update
     container_name: db_update
+    environment:
+      DB_BUCKET_NAME: 'mybucket'
+      DB_HOST_NAME: 'influxdb'
+      DB_PORT: '8086'
+      DB_TOKEN: 'my-super-secret-auth-token' 
+      DB_ORG: 'myorg'     
     ports:
       - "50000:50000"
     networks:
       - backend
-    volumes:
-      - load_db_app:/app
     depends_on:
       - influxdb
 
 volumes:
   influxdb_data:
   influxdb_config:
-  load_db_app:
+
 
 networks:
   frontend:
