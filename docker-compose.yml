@@ -20,6 +20,8 @@ services:
       - backend
     depends_on:
       - influxdb
+    volumes:
+      - ./backend/tests:/app/tests
 
   client:
     build:
