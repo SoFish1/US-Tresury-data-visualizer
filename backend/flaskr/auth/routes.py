@@ -7,23 +7,28 @@ from datetime import datetime
 from sqlalchemy import exc
 from time import sleep
 from flask_jwt_extended  import create_access_token, jwt_required, get_jwt_identity
-from ..schemas import UserRegister
+from ..schemas import UserRegister, BaseToken, BaseMessage, UserLogin
 from flask_pydantic import validate
 
 
-@auth_bp.route("confirm_email/<token>")
-def confirm_email(token):
-    try:
-        confirm_serializers=URLSafeTimedSerializer(current_app.secret_key)
-        confirmed_email = confirm_serializers.loads(token, salt="email-confirm", max_age=6000)
-        confirmedaccount= User.query.filter_by(email=confirmed_email).first()
-        confirmedaccount.email_confirmed_at = datetime.utcnow()
-        db.session.commit()
+# Base endpoint for testing
+@auth_bp.route("/", methods=["GET"])
+def root():
+    return{"message": "Hello World"}
+
+# @auth_bp.route("confirm_email/<token>")
+# def confirm_email(token):
+#     try:
+#         confirm_serializers=URLSafeTimedSerializer(current_app.secret_key)
+#         confirmed_email = confirm_serializers.loads(token, salt="email-confirm", max_age=6000)
+#         confirmedaccount= User.query.filter_by(email=confirmed_email).first()
+#         confirmedaccount.email_confirmed_at = datetime.utcnow()
+#         db.session.commit()
                       
-    except SignatureExpired:
-        return render_template("auth/expired_link.html", title = "Link expired!")
+#     except SignatureExpired:
+#         return render_template("auth/expired_link.html", title = "Link expired!")
         
-    return render_template("auth/confirmed_account.html", title = "Welcome!")
+#     return render_template("auth/confirmed_account.html", title = "Welcome!")
 
 
 
@@ -76,18 +81,19 @@ def confirm_email(token):
 
 
 @auth_bp.route("/token", methods=["POST"])
+@validate(body=UserLogin)
 def login():
     
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
+    email = request.body_params.email
+    password = request.body_params.password
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=str(email)).first()
     
     if user is None or not user.check_password(password):
-        return jsonify({"msg": "Bad username or password"}), 401
+        return BaseMessage(message="Bad username or password"), 401
     
     if user.email_confirmed_at is None :
-        return jsonify({"msg": "The account is not activated"}), 401
+        return BaseMessage(message="The account is not activated"), 401
     
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
@@ -99,10 +105,7 @@ def login():
 @validate(body=UserRegister)
 def register():
     
-    
     email=request.body_params.email
-    
-    
 
     try:
         
@@ -116,7 +119,7 @@ def register():
     except exc.IntegrityError:
         db.session.rollback()
         
-        return jsonify({"msg":"This email is already used"}), 555
+        return BaseMessage(message="This email is already used"), 555
 
     #Send confirmation email token
     confirm_serializers=URLSafeTimedSerializer(current_app.secret_key)
@@ -125,18 +128,20 @@ def register():
         send_confirmation_email(email,token)
     
     except:
-        return jsonify({"msg":"Something went wrong, the confirmation email has not been sent"}), 555
+        return BaseMessage(message="Something went wrong, the confirmation email has not been sent"), 555
 
-    return jsonify(token), 200
+    return jsonify(token),200
+   
 
 
 
 
 
 @auth_bp.route("/validate-email-token", methods=["POST"])
+@validate(body=BaseToken)
 def confirmed_account():
     try:
-        token = request.json.get("token", None)
+        token = request.body_params.token
         confirm_serializers=URLSafeTimedSerializer(current_app.secret_key)
         confirmed_email = confirm_serializers.loads(token, salt="email-confirm", max_age=6000)
         confirmedaccount= User.query.filter_by(email=confirmed_email).first()
@@ -144,11 +149,7 @@ def confirmed_account():
         db.session.commit()
                       
     except SignatureExpired:
-        return jsonify({"msg":"Expired token"}), 555
+        return BaseMessage(message="Expired token"), 555
         
-    return jsonify({"msg":"Account successfully confirmed!"}), 200
+    return BaseMessage(message="Account successfully confirmed!"), 200
 
-# Base endpoint for testing
-@auth_bp.route("/", methods=["GET"])
-def root():
-    return{"message": "Hello World"}

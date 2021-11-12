@@ -4,15 +4,20 @@ from typing import Optional
 
 from pydantic.types import conint
 
-class UserRegister(BaseModel):
+
+
+class UserInfo(BaseModel):
     email: EmailStr
-    password: str
+    password: str    
 
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
+class UserRegister(UserInfo):
+    pass
 
-class Token(BaseModel):
-    access_token: str
+class UserLogin(UserInfo):
+    pass
 
-    
+class BaseToken(BaseModel):
+    token: str
+
+class BaseMessage(BaseModel):
+    message: str    
