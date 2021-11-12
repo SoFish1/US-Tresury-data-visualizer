@@ -16,69 +16,6 @@ from flask_pydantic import validate
 def root():
     return{"message": "Hello World"}
 
-# @auth_bp.route("confirm_email/<token>")
-# def confirm_email(token):
-#     try:
-#         confirm_serializers=URLSafeTimedSerializer(current_app.secret_key)
-#         confirmed_email = confirm_serializers.loads(token, salt="email-confirm", max_age=6000)
-#         confirmedaccount= User.query.filter_by(email=confirmed_email).first()
-#         confirmedaccount.email_confirmed_at = datetime.utcnow()
-#         db.session.commit()
-                      
-#     except SignatureExpired:
-#         return render_template("auth/expired_link.html", title = "Link expired!")
-        
-#     return render_template("auth/confirmed_account.html", title = "Welcome!")
-
-
-
-# @auth_bp.route("/reset_password_demand", methods=('GET', 'POST'))
-# def reset_password_demand():
-#     form = Get_email()
-
-
-#     email=form.email  
-
-#     if form.validate_on_submit():
-#         user = User.query.filter_by(email=form.email.data).first()
-#         if user:
-            
-            
-#             flash(('Check your email for the instructions to reset your password'))    
-#             #To send confirmation email token
-#             confirm_serializers=URLSafeTimedSerializer(current_app.secret_key)
-#             token=confirm_serializers.dumps(user.email,salt="reset-password")
-#             send_reset_password_email(user.email,token)
-
-
-#     return render_template("auth/reset_password_demand.html", form=form, title = "Reset Password")
-
-
-# @auth_bp.route("/reset_password_confirm/<token>", methods=('GET', 'POST'))
-# def reset_password_confirm(token):
-#     form=Reset_password()
-    
-#     if form.validate_on_submit():
-#         try:
-#             confirm_serializers=URLSafeTimedSerializer(current_app.secret_key)
-#             confirmed_email = confirm_serializers.loads(token, salt="reset-password", max_age=6000)
-#             confirmedaccount= User.query.filter_by(email=confirmed_email).first()
-#             confirmedaccount.set_password(form.new_password.data)
-#             db.session.commit()
-            
-
-#         except SignatureExpired:
-#             return render_template("auth/expired_link.html", title = "Link expired!")
-
-#         return redirect(url_for('auth.login'))
-                      
-    
-
-#     return render_template("auth/reset_password.html", form=form, title = "Reset Password")
-
-
-
-
 
 @auth_bp.route("/token", methods=["POST"])
 @validate(body=UserLogin)
