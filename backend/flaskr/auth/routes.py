@@ -7,8 +7,8 @@ from datetime import datetime
 from sqlalchemy import exc
 from time import sleep
 from flask_jwt_extended  import create_access_token, jwt_required, get_jwt_identity
-
-
+from ..schemas import UserRegister
+from flask_pydantic import validate
 
 
 @auth_bp.route("confirm_email/<token>")
@@ -96,15 +96,20 @@ def login():
 
 
 @auth_bp.route("/register", methods=["POST"])
+@validate(body=UserRegister)
 def register():
-   
-    email=request.json.get("email", None)
+    
+    
+    email=request.body_params.email
+    
+    
 
     try:
         
-        #Put the data in the db
-        user = User(email=email)
-        user.set_password(request.json.get("password", None))
+        
+        user = User(email=str(email))
+        user.set_password(request.body_params.password)
+        
         db.session.add(user)
         db.session.commit()
             
@@ -143,5 +148,7 @@ def confirmed_account():
         
     return jsonify({"msg":"Account successfully confirmed!"}), 200
 
-
-
+# Base endpoint for testing
+@auth_bp.route("/", methods=["GET"])
+def root():
+    return{"message": "Hello World"}
