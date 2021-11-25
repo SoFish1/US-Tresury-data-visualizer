@@ -36,3 +36,8 @@ class Config(object):
 
     #FRONT END
     FRONT_END_URI = "http://localhost:3000"
+    
+class TestingConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL') or \
+        'sqlite:///' + path.join(basedir, 'app_test.db')

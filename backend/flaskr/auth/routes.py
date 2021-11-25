@@ -29,7 +29,7 @@ def login():
     if user is None or not user.check_password(password):
         return BaseMessage(message="Bad username or password"), 401
     
-    if user.email_confirmed_at is None :
+    elif user.email_confirmed_at is None :
         return BaseMessage(message="The account is not activated"), 401
     
     access_token = create_access_token(identity=email)
@@ -65,7 +65,7 @@ def register():
         send_confirmation_email(email,token)
     
     except:
-        return BaseMessage(message="Something went wrong, the confirmation email has not been sent"), 555
+        return BaseMessage(message="Something went wrong, the confirmation email has not been sent"), 556
 
     return jsonify(token),200
    

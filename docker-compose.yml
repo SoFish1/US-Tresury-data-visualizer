@@ -22,6 +22,7 @@ services:
       - influxdb
     volumes:
       - ./backend/tests:/app/tests
+      - ./backend/flaskr:/app/flaskr  
 
   client:
     build:

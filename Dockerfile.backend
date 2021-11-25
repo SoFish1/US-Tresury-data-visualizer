@@ -1,9 +1,9 @@
 FROM python:3.9
 WORKDIR /app
 
-COPY backend/requirements.txt backend/.flaskenv backend/config.py backend/password_file.py backend/wsgi.py ./
+COPY backend/requirements.txt backend/.flaskenv backend/config.py backend/password_file.py backend/wsgi.py  ./
 COPY  backend/flaskr  flaskr
-
+COPY  backend/tests tests
 
 RUN pip install -r ./requirements.txt
 RUN pip install gunicorn
