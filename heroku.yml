@@ -2,5 +2,5 @@ build:
   docker:
     web: Dockerfile.frontend
   
-    docker:
+  docker:
     web: Dockerfile.backend
