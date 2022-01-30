@@ -1,16 +1,23 @@
-from influxdb_client import InfluxDBClient
-from influxdb_client.client.write_api import SYNCHRONOUS
+from psycopg2 import connect
+from psycopg2.extras import RealDictCursor
 from os import environ
 
 
 db_host_name = environ["DB_HOST_NAME"]
-bucket = environ["DB_BUCKET_NAME"]
-db_port = environ["DB_PORT"]
-db_token = environ["DB_TOKEN"]
-db_org = environ["DB_ORG"]
+db_name = environ["DB_NAME"]
+db_password = environ["DB_PASSWORD"]
+db_user = environ["DB_USER"]
 
-client = InfluxDBClient(url="http://"+db_host_name+":"+ db_port, token=db_token,org=db_org)
 
-write_api = client.write_api(write_options=SYNCHRONOUS)
+#client = InfluxDBClient(url="http://"+db_host_name+":"+ db_port, token=db_token,org=db_org)
+try:
+    conn =connect(host=db_host_name,database=db_name, user=db_user,password=db_password,cursor_factory= RealDictCursor) 
+    cursor=conn.cursor()
+    print("Database connection is succesful")
+except Exception as error:
+    print("Connecting to database failed")
+    print("Error:", error)
+
+#write_api = client.write_api(write_options=SYNCHRONOUS)
 
 
