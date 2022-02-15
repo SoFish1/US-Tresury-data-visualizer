@@ -14,7 +14,7 @@ class User(db.Model):
 
     # User authentication information. The collation='NOCASE' is required
     # to search case insensitively when USER_IFIND_MODE is 'nocase_collation'.
-    email = db.Column(db.String(255, collation='NOCASE'), nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
     email_confirmed_at = db.Column(db.DateTime())
     password_hash = db.Column(db.String(128))
 
@@ -36,5 +36,6 @@ class User(db.Model):
 
 
 
-
+class Data(db.Model):
+    __tablename__ = 'users'
 

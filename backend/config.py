@@ -17,10 +17,7 @@ class Config(object):
     db_user = environ["DB_USER"]
     db_port = environ["DATABASE_PORT"]
 
-    #SQLALCHEMY_DATABASE_URI = f'postgresql://{db_user}:{db_password}@{db_host_name}:{db_port}/{db_name}'
-    SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL') or \
-        'sqlite:///' + path.join(basedir, 'app.db')
-    #SQLALCHEMY_TRACK_MODIFICATIONS = False    # Avoids SQLAlchemy warning
+    SQLALCHEMY_DATABASE_URI = f'postgresql://{db_user}:{db_password}@{db_host_name}:{db_port}/{db_name}'
 
     # Flask-Mail SMTP server settings
     MAIL_SERVER = 'smtp.gmail.com'
