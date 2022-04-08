@@ -9,12 +9,15 @@ load_dotenv(path.join(basedir, '.env'))
 class Config(object):
     # Flask settings
     SECRET_KEY = b'\x11\xa1\x971r\x9a\x1a\t\\l#6*L\xec\xf3,O\xc3\xa4\x933\xc6\xde'
-    # SECRET_KEY = urandom(24)
-    # JWT_SECRET_KEY = urandom(24)
+
     # Flask-SQLAlchemy settings
-    SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL') or \
-        'sqlite:///' + path.join(basedir, 'app.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False    # Avoids SQLAlchemy warning
+    db_host_name = environ["DB_HOST_NAME"]
+    db_name = environ["DB_NAME"]
+    db_password = environ["DB_PASSWORD"]
+    db_user = environ["DB_USER"]
+    db_port = environ["DATABASE_PORT"]
+
+    SQLALCHEMY_DATABASE_URI = f'postgresql://{db_user}:{db_password}@{db_host_name}:{db_port}/{db_name}'
 
     # Flask-Mail SMTP server settings
     MAIL_SERVER = 'smtp.gmail.com'
